@@ -140,20 +140,20 @@ $(window).unload(function () {
 });
 
 
-var Developer = function (first, last) {
-    var self = this;
+//var Developer = function (first, last) {
+//    var self = this;
 
-    self.firstName = ko.observable(first);
-    self.lastName = ko.observable(last);
+//    self.firstName = ko.observable(first);
+//    self.lastName = ko.observable(last);
 
-    self.fullName = ko.pureComputed(function () {
-        return self.firstName() + " " + first.lastName();
-    });
-};
+//    self.fullName = ko.pureComputed(function () {
+//        // Con el simple hecho de poner los parents+parents, con ello basta para no regresar la clase sino el string resultado
+//        return self.firstName() + " " + first.lastName();
+//    });
+//};
 
-var Bug = function (description) {
-    var self = this;
+//var Bug = function (description) {
+//    var self = this;
+//    self.description = ko.observable(description);
 
-    self.description
-
-}
+//}

@@ -1,5 +1,8 @@
 ﻿function AppDataModel() {
+
+    // El uso de esto del "self" es para que cuando defines una función de regreso, dentro de ella se sepa quien era el llamador
     var self = this;
+
     // Routes
     self.userInfoUrl = "/api/Me";
     self.siteUrl = "/";
@@ -25,5 +28,13 @@
     // Del MVA de knockout
     self.firstName = ko.observable("Hector");
     self.lastName = ko.observable("Casavantes");
+
+    // En JS ojo con no reinicializar las variables, es cláramente distinto uno del otro:
+    // self.lastName = "Casavantes" ;
+    // self.lastName("Casavantes");
+    self.fullName = ko.pureComputed(function () {
+        // Ojo pues self.firstName + ' ' + self.lastName sin los parent-parent regresa los objetos
+        return self.firstName() + ' ' + self.lastName();
+    });
 
 }
