@@ -5,6 +5,8 @@
 
 $(function () {
     app.initialize();
+    
+    // Comment added on GitHub
 
     // Activate Knockout
     ko.validation.init({ grouping: { observable: false } });
