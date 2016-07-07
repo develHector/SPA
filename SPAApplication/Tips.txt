@@ -1,0 +1,11 @@
+﻿
+1. Problemas con IIS Express?
+The exit code -1 means that the reason is unknown.
+IIS Express logs are located at :
+%userprofile%\documents\IISExpress\Logs\
+
+2. Interés de extraer nombre de usuario y demás datos en SignalR?
+	Context property, tal como en un controller de MVC
+	Por ejemplo, Context.User.Identity.Name
+
+3. Para que una lista jale más fácilmente, podemos ayudarle con IEquatable<Objeto>

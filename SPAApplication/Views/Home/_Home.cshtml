@@ -1,0 +1,88 @@
+﻿<!-- ko with: home -->
+<div class="jumbotron">
+    <h1>Introduction to ASP.NET MVC</h1>
+    <p class="lead">ASP.NET is a free web framework for building great Web sites and Web applications using HTML, CSS, and JavaScript.</p>
+    <p><a href="http://asp.net" class="btn btn-primary btn-lg">Learn more &raquo;</a></p>
+</div>
+
+<div class="row">
+    <div class="col-md-6">
+        <h2>Your information</h2>
+        <p>This section shows how you can call ASP.NET Web API to get the user details.</p>
+        <p data-bind="text: myHometown"></p>
+        <p data-bind="text: myColorFavorito"></p>
+        <p data-bind="text: myPrimeraNovia"></p>
+
+        <p><a class="btn btn-default" href="http://go.microsoft.com/fwlink/?LinkId=273732">Learn more &raquo;</a></p>
+
+
+    </div>
+
+
+    <div class="col-md-3">
+        <h2>Getting started</h2>
+        <p>
+            ASP.NET Single Page Application (SPA) helps you build applications that include significant client-side interactions using HTML, CSS, and JavaScript.
+            It's now easier than ever before to getting started writing highly interactive web applications.
+        </p>
+        <p><a class="btn btn-default" href="http://go.microsoft.com/fwlink/?LinkId=273732">Learn more &raquo;</a></p>
+    </div>
+
+    <div class="col-md-3">
+        <h2>Web Hosting</h2>
+        <p>You can easily find a web hosting company that offers the right mix of features and price for your applications.</p>
+        <p><a class="btn btn-default" href="http://go.microsoft.com/fwlink/?LinkId=301867">Learn more &raquo;</a></p>
+    </div>
+</div>
+
+<div class="row">
+    <div class="col-md-6">
+
+        <h3>SignalR Local</h3>           
+
+        <span class="glyphicon glyphicon-info-sign"></span>
+        <div class="progress">
+            
+            <div id="progress_local" class="progress-bar" role="progressbar" aria-valuenow="50" aria-valuemin="0" aria-valuemax="100" style="width: 50%;">
+                0
+            </div>
+            </div>
+            <div id="timer_local">            
+
+        </div>
+        <div id="state_local">&nbsp;</div>
+
+
+    </div>
+    <div class="col-md-6">
+
+        <h3>SignalR Remote</h3>           
+        <span class="glyphicon glyphicon-info-sign"></span>
+        <div class="progress">
+
+            <div id="progress_remote" class="progress-bar" role="progressbar" aria-valuenow="50" aria-valuemin="0" aria-valuemax="100" style="width: 50%;">
+                0
+            </div>
+        </div>
+        <div id="timer_remote">
+            &nbsp;
+        </div>
+        <div id="state_remote">&nbsp;</div>
+
+
+    </div>
+</div>
+<div class="row">
+
+    <div class="col-md-6">
+        <h3>Knockout</h3>           
+        <p>First Name: <span data-bind="text: app.dataModel.firstName"></span></p>
+        <p>Last Name: <span data-bind="text: app.dataModel.lastName"></span></p>
+        <input type="text" name="name" data-bind="value: app.dataModel.firstName" />
+    </div>
+    <div class="col-md-6">
+    </div>
+    </div>
+
+
+    <!-- /ko -->
