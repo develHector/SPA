@@ -6,7 +6,7 @@
 $(function () {
     app.initialize();
     
-    // Comment added on GitHub
+    // Comment added on GitHub - now from VS
 
     // Activate Knockout
     ko.validation.init({ grouping: { observable: false } });
