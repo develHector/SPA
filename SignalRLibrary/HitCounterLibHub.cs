@@ -2,6 +2,8 @@
 
 namespace SignalRLibrary
 {
+    using MyBag = System.Collections.Generic.List<TimerMessage>;
+
     // La hacemos abstracta para que deba ser herdada
     public abstract class HitCounterLibHub : Microsoft.AspNet.SignalR.Hub
     {
@@ -14,21 +16,80 @@ namespace SignalRLibrary
             if (CreateTimer && HitCounterLibHub.mytimer == null)
             {
                 HitCounterLibHub.mytimer = new System.Threading.Timer(this.onTimer, null, 1000, 1000);
-            }            
+            }
+
+#if DEBUG
+            // Prueba y comparación de la serialización JSON texto y binaria
+            // Desconozco si comprimida una será mejor que la otra, 
+            // Desconozco si la serlalización binaria nativa de .Net es mejor, más rápida o de menor tamaño
+            // NOTA: No pude de-serializar la lista, solo el objeto binario
+            var t0 = new TimerMessage(DateTime.Now);
+            var bag = new MyBag() { t0, new TimerMessage(DateTime.MinValue), new TimerMessage(DateTime.MaxValue) };
+
+            var tobj = JsonSerializationTest(bag);
+            var tbag = JsonDeserializationTest<MyBag>(tobj);
+            System.Diagnostics.Debug.WriteLine(tbag.ToString());
+
+            var bobj0 = BinaryJsonSerializationTest(t0);
+            var bt0 = BinaryJsonDeserializationTest<TimerMessage>(bobj0);
+            System.Diagnostics.Debug.WriteLine(bt0.ToString());
+
+            var tobj1 = JsonSerializationTest(t0);
+            var bt1 = JsonDeserializationTest<MyBag>(tobj);
+            System.Diagnostics.Debug.WriteLine(tbag.ToString());
+#endif    
         }
-                        
+
 
         private void onTimer(object state)
         {
             // Automáticamente SignalR serializa a JSON
             var p1 = new TimerMessage(DateTime.Now);
-            
+
             // Pero para fines didácticos, mandamos una lista serializada de cosas básicas
-            var Bag = new System.Collections.Generic.List<TimerMessage>() { p1 };
-            var SerializedBag = Newtonsoft.Json.JsonConvert.SerializeObject(Bag);
+            var bag = new MyBag() { p1 };
+            var SerializedBag = Newtonsoft.Json.JsonConvert.SerializeObject(bag);
 
             // Mandamos a toda la banda
             Clients.All.onTimer(SerializedBag);
+        }
+
+        private string JsonSerializationTest<T>(T bag)
+        {
+            return Newtonsoft.Json.JsonConvert.SerializeObject(bag); ;
+        }
+
+        private T JsonDeserializationTest<T>(string buffer)
+        {
+            return Newtonsoft.Json.JsonConvert.DeserializeObject<T>(buffer); ;
+        }
+
+        private byte[] BinaryJsonSerializationTest<T>(T bag)
+        {
+            var jsonSerializer = new Newtonsoft.Json.JsonSerializer();
+
+            using (var ms = new System.IO.MemoryStream())
+            using (var bson = new Newtonsoft.Json.Bson.BsonWriter(ms))
+            {
+                jsonSerializer.Serialize(bson, bag, typeof(T));
+                return ms.ToArray();
+            }
+
+        }
+
+        private T BinaryJsonDeserializationTest<T>(byte[] bytes)
+        {
+            var jsonSerializer = new Newtonsoft.Json.JsonSerializer();
+
+            // Deserialization
+            using (var ms = new System.IO.MemoryStream(bytes))
+            {
+                using (var bson = new Newtonsoft.Json.Bson.BsonReader(ms))
+                {
+                    // Exception here
+                    return jsonSerializer.Deserialize<T>(bson);
+                }
+            }
         }
 
         public void RecordHit()

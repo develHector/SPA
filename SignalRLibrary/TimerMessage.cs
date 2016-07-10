@@ -10,23 +10,23 @@ namespace SignalRLibrary
         public long id { get; set; }
         public bool ok { get; set; }
 
-        public TimerMessage(DateTime now)
+        public TimerMessage(DateTime d)
         {
-            this.texto = DateTime.Now.ToString("T");
-            this.fecha = DateTime.Now;
-            this.hora = DateTime.Now.TimeOfDay;
-            this.id = DateTime.Now.Ticks;
+            this.texto = d.ToString("T");
+            this.fecha = d;
+            this.hora = d.TimeOfDay;
+            this.id = d.Ticks;
             this.ok = true;
         }
 
-        public bool Equals(TimerMessage other)
+        public bool Equals(TimerMessage o)
         {
-            return other != null &&
-                this.texto.Equals(other.texto) &&
-                this.fecha.Equals(other.fecha) &&
-                this.hora.Equals(other.hora) &&
-                this.id.Equals(other.id) &&
-                this.ok.Equals(other.ok);
+            return o != null &&
+                this.texto.Equals(o.texto) &&
+                this.fecha.Equals(o.fecha) &&
+                this.hora.Equals(o.hora) &&
+                this.id.Equals(o.id) &&
+                this.ok.Equals(o.ok);
         }
     }
 }

@@ -48,6 +48,14 @@ namespace SignalRService
                 var uri = "https://localhost:8082";
                 SingalRService.webapp = Microsoft.Owin.Hosting.WebApp.Start<SignalRService.Startup>(uri);
             }
+
+            var d = new System.Collections.Concurrent.ConcurrentQueue<int>();
+            Enumerable.Range(0, 50 * 1000 * 1000).ToList().ForEach((i) => d.Enqueue(i));
+            int j;
+            while (d.Any()) d.TryDequeue(out j);
+
+            System.Diagnostics.Debug.WriteLine(string.Empty);
+
         }
     }
 }
