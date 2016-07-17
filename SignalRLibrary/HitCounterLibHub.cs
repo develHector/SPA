@@ -17,14 +17,20 @@ namespace SignalRLibrary
             {
                 HitCounterLibHub.mytimer = new System.Threading.Timer(this.onTimer, null, 1000, 1000);
             }
+        }
 
 #if DEBUG
+        public void JsonSerializaionTests()
+        {
             // Prueba y comparación de la serialización JSON texto y binaria
             // Desconozco si comprimida una será mejor que la otra, 
             // Desconozco si la serlalización binaria nativa de .Net es mejor, más rápida o de menor tamaño
             // NOTA: No pude de-serializar la lista, solo el objeto binario
-            var t0 = new TimerMessage(DateTime.Now);
-            var bag = new MyBag() { t0, new TimerMessage(DateTime.MinValue), new TimerMessage(DateTime.MaxValue) };
+            var t0 = new TimerMessage() { fecha = DateTime.Now, timestamp = DateTime.Now.ToBinary(), texto = DateTime.Now.ToString("R") };
+            var t1 = new TimerMessage() { fecha = DateTime.MinValue, timestamp = DateTime.MinValue.ToBinary(), texto = DateTime.MinValue.ToString("R") };
+            var t2 = new TimerMessage() { fecha = DateTime.MaxValue, timestamp = DateTime.MaxValue.ToBinary(), texto = DateTime.MaxValue.ToString("R") };
+
+            var bag = new MyBag() { t0, t1, t2 };
 
             var tobj = JsonSerializationTest(bag);
             var tbag = JsonDeserializationTest<MyBag>(tobj);
@@ -37,17 +43,18 @@ namespace SignalRLibrary
             var tobj1 = JsonSerializationTest(t0);
             var bt1 = JsonDeserializationTest<MyBag>(tobj);
             System.Diagnostics.Debug.WriteLine(tbag.ToString());
-#endif    
         }
-
+#endif    
 
         private void onTimer(object state)
         {
             // Automáticamente SignalR serializa a JSON
-            var p1 = new TimerMessage(DateTime.Now);
+            var t0 = new TimerMessage() { fecha = DateTime.Now, timestamp = DateTime.Now.ToBinary(), texto = DateTime.Now.ToString("R") };
+            var t1 = new TimerMessage() { fecha = DateTime.MinValue, timestamp = DateTime.MinValue.ToBinary(), texto = DateTime.MinValue.ToString("R") };
+            var t2 = new TimerMessage() { fecha = DateTime.MaxValue, timestamp = DateTime.MaxValue.ToBinary(), texto = DateTime.MaxValue.ToString("R") };
 
             // Pero para fines didácticos, mandamos una lista serializada de cosas básicas
-            var bag = new MyBag() { p1 };
+            var bag = new MyBag() { t0, t1, t2 };
             var SerializedBag = Newtonsoft.Json.JsonConvert.SerializeObject(bag);
 
             // Mandamos a toda la banda
@@ -101,7 +108,7 @@ namespace SignalRLibrary
         }
 
         /// <summary>
-        /// Qué? El server se da cuenta cuando cierro mi browser? SIIIIIIIIIIIIII!!!!!!!!!!!!!!!!!!!
+        /// El server se da cuenta cuando cierro mi browser? 
         /// </summary>
         /// <param name="stopCalled"></param>
         /// <returns></returns> 

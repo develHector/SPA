@@ -81,6 +81,8 @@
       <HintPath>..\packages\Microsoft.SqlServer.Compact.4.0.8876.1\lib\net40\System.Data.SqlServerCe.dll</HintPath>
       <Private>True</Private>
     </Reference>
+    <Reference Include="System.Runtime.Serialization" />
+    <Reference Include="System.Security" />
     <Reference Include="System.Web.Extensions" />
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Data.DataSetExtensions" />
@@ -92,21 +94,59 @@
   <ItemGroup>
     <Compile Include="HitCounterLibHub.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="TimerMessage.cs" />
+    <Compile Include="StorageModel.Context.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>StorageModel.Context.tt</DependentUpon>
+    </Compile>
+    <Compile Include="StorageModel.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>StorageModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="StorageModel.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>StorageModel.edmx</DependentUpon>
+    </Compile>
+    <Compile Include="TimerMessage.cs">
+      <DependentUpon>StorageModel.tt</DependentUpon>
+    </Compile>
   </ItemGroup>
   <ItemGroup>
-    <Content Include="Scripts\jquery-1.6.4-vsdoc.js" />
-    <Content Include="Scripts\jquery-1.6.4.js" />
-    <Content Include="Scripts\jquery-1.6.4.min.js" />
+    <Content Include="Scripts\jquery-2.2.4.intellisense.js" />
+    <Content Include="Scripts\jquery-2.2.4.js" />
+    <Content Include="Scripts\jquery-2.2.4.min.js" />
     <Content Include="Scripts\jquery.signalR-2.2.0.js" />
     <Content Include="Scripts\jquery.signalR-2.2.0.min.js" />
+    <Content Include="StorageModel.Context.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <DependentUpon>StorageModel.edmx</DependentUpon>
+      <LastGenOutput>StorageModel.Context.cs</LastGenOutput>
+    </Content>
+    <Content Include="StorageModel.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <DependentUpon>StorageModel.edmx</DependentUpon>
+      <LastGenOutput>StorageModel.cs</LastGenOutput>
+    </Content>
   </ItemGroup>
   <ItemGroup>
     <None Include="app.config" />
     <None Include="packages.config" />
+    <EntityDeploy Include="StorageModel.edmx">
+      <Generator>EntityModelCodeGenerator</Generator>
+      <LastGenOutput>StorageModel.Designer.cs</LastGenOutput>
+    </EntityDeploy>
+    <None Include="Scripts\jquery-2.2.4.min.map" />
+    <None Include="StorageModel.edmx.diagram">
+      <DependentUpon>StorageModel.edmx</DependentUpon>
+    </None>
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Data\" />
+  </ItemGroup>
+  <ItemGroup>
+    <Service Include="{508349B6-6B84-4DF5-91F0-309BEEBAD82D}" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <PropertyGroup>
