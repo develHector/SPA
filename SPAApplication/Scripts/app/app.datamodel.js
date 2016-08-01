@@ -28,6 +28,7 @@
     // Del MVA de knockout
     self.firstName = ko.observable("Hector");
     self.lastName = ko.observable("Casavantes");
+    self.lastUpdate = ko.observable( Date.now );
 
     // En JS ojo con no reinicializar las variables, es cláramente distinto uno del otro:
     // self.lastName = "Casavantes" ;

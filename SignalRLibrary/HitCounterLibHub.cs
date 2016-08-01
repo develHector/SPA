@@ -98,7 +98,7 @@ namespace SignalRLibrary
                 }
             }
         }
-
+        
         public void RecordHit()
         {
             // Clients.All.hello(); // Este lo pone por default, pero no le hagamos caso
